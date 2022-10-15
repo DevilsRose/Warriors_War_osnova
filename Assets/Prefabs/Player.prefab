@@ -151,10 +151,10 @@ MonoBehaviour:
   jumpPower: 20
   groundLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   wallLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 4096
 --- !u!95 &6420927484573810165
 Animator:
   serializedVersion: 3
@@ -190,7 +190,7 @@ MonoBehaviour:
   attackPoint: {fileID: 6420927485831946928}
   enemyLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1024
   attackRange: 0.9
   attackDamage: 40
   attackRate: 2
