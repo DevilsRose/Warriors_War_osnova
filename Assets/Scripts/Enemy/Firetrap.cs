@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Firetrap : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class Firetrap : MonoBehaviour
         {
             if(!triggered)
             {
-
+                StartCoroutine(ActivateFiretrap());
             }
 
             if(active)
@@ -34,6 +35,19 @@ public class Firetrap : MonoBehaviour
             }
         }
     }
+    private IEnumerator ActivateFiretrap()
+    {
+        triggered = true;
+        spriteRend.color = Color.red;
 
+        yield return new WaitForSeconds(activationDelay);
+        spriteRend.color = Color.white;
+        active = true;
+        anim.SetBool("activated", true);
 
+        yield return new WaitForSeconds(activeTime);
+        active = false;
+        triggered = false;
+        anim.SetBool("activated", false);
+    }
 }
