@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 5120802289038954671}
   - component: {fileID: 5120802289038954674}
   - component: {fileID: 391931400679891479}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -263,4 +263,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCooldown: 1
   arrowPoint: {fileID: 6193836955879292324}
-  arrows: []
+  arrows:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

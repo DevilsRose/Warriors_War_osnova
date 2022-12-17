@@ -56,11 +56,12 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Enemy Normal\MeleeEnemy.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
-    <Compile Include="Assets\Scripts\Enemy\EnemyDamage.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Enemy_Sideway.cs" />
-    <Compile Include="Assets\Scripts\Enemy\Firetrap.cs" />
+    <Compile Include="Assets\Scripts\Another\Enemy.cs" />
+    <Compile Include="Assets\Scripts\Another\EnemyDamage.cs" />
+    <Compile Include="Assets\Scripts\Another\Enemy_Sideway.cs" />
+    <Compile Include="Assets\Scripts\Another\Firetrap.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyPatrol.cs" />
+    <Compile Include="Assets\Scripts\Enemy\MeleeEnemy.cs" />
     <Compile Include="Assets\Scripts\Health\Health.cs" />
     <Compile Include="Assets\Scripts\Health\HealthCollectible.cs" />
     <Compile Include="Assets\Scripts\Health\Helthbar.cs" />
