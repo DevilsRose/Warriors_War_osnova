@@ -60,8 +60,11 @@
     <Compile Include="Assets\Scripts\Another\EnemyDamage.cs" />
     <Compile Include="Assets\Scripts\Another\Enemy_Sideway.cs" />
     <Compile Include="Assets\Scripts\Another\Firetrap.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyFireballHolder.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyPatrol.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyProjectile.cs" />
     <Compile Include="Assets\Scripts\Enemy\MeleeEnemy.cs" />
+    <Compile Include="Assets\Scripts\Enemy\RangeEnemy.cs" />
     <Compile Include="Assets\Scripts\Health\Health.cs" />
     <Compile Include="Assets\Scripts\Health\HealthCollectible.cs" />
     <Compile Include="Assets\Scripts\Health\Helthbar.cs" />
