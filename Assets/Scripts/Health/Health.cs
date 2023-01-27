@@ -33,14 +33,13 @@ public class Health : MonoBehaviour
         {
             if(!dead)
             {
-                //player dead
-                anim.SetTrigger("die");
 
                 //deactivate all attached components
                 foreach (Behaviour component in components)
-                {
                     component.enabled = false;
-                }
+
+                anim.SetBool("grounded", true);
+                anim.SetTrigger("die");
 
                 dead = true;
             }

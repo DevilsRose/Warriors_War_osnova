@@ -1,16 +1,35 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header ("Movement Parameters")]
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
+    [SerializeField] private GameObject LevelComplited;
+
+    [Header("Coyote Time")]
+    [SerializeField] private float coyoteTime; //how mach time the player can hang in the air before jumping
+    private float coyoteCounter; //how mach time passed since the player run of the edge
+
+    [Header("Multiple Jumps")]
+    [SerializeField] private int extraJumps;
+    private int jumpCounter;
+
+    [Header("Wall Jumping")]
+    [SerializeField] private float wallJumpX;
+    [SerializeField] private float wallJumpY;
+
+    [Header("Layers")]
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer; 
+
     private Rigidbody2D body;
     private Animator anim;
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
     private float horizontalInput;
+    private Joystick joystick;
 
     private void Awake()
     {
@@ -33,52 +52,84 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("run", horizontalInput != 0);
         anim.SetBool("grounded", isGrounded());
 
-        //wall jump logic
-        if (wallJumpCooldown > 0.2f)
+        //jump
+        if (Input.GetKeyDown(KeyCode.Space))
+            Jump();
+
+        //adjustable jump height
+        if (Input.GetKeyUp(KeyCode.Space) && body.velocity.y > 0)
+            body.velocity = new Vector2(body.velocity.x, body.velocity.y / 2);
+
+        if (onWall())
         {
-
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-
-            if (onWall() && !isGrounded())
-            {
-                body.gravityScale = 0;
-                body.velocity = Vector2.zero;
-            }
-            else
-                body.gravityScale = 7;
-
-            if (Input.GetKey(KeyCode.Space))
-                Jump();
+            body.gravityScale = 0;
+            body.velocity = Vector2.zero;
         }
         else
-            wallJumpCooldown += Time.deltaTime;
+        {
+            body.gravityScale = 7;
+            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
 
+            if (isGrounded())
+            {
+                coyoteCounter = coyoteTime; //reset coyote counter when on the grounded
+                jumpCounter = extraJumps;
+            }
+            else
+                coyoteCounter -= Time.deltaTime;
+        }
+
+ 
     }
 
     private void Jump()
     {
-        if(isGrounded())
-        {
-            body.velocity = new Vector2(body.velocity.x, jumpPower);
-            anim.SetTrigger("jump");
-        }
-        else if(onWall() && !isGrounded())
-        {
-            if(horizontalInput == 0)
-            {
-                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);
-                transform.localScale = new Vector3(-Mathf.Sign(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-            }
-            else
-                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 3, 6);
+        if (coyoteCounter < 0 && !onWall() && jumpCounter <= 0) return;
 
-            wallJumpCooldown = 0;
+        if (onWall())
+            WallJump();
+        else
+        {
+            if (isGrounded())
+                body.velocity = new Vector2(body.velocity.x, jumpPower);
+            else
+            {
+                //if not on the ground and coyote counter bigger then 0 do a normal jump
+                if(coyoteCounter > 0)
+                    body.velocity = new Vector2(body.velocity.x, jumpPower);
+                else
+                {
+                    if(jumpCounter > 0)
+                    {
+                        body.velocity = new Vector2(body.velocity.x, jumpPower);
+                        jumpCounter--;
+                    }
+                }
+            }
+
+            //reset coyote counter to 0 to avoid double jump
+            coyoteCounter = 0;
         }
+    }
+
+    private void WallJump()
+    {
+        body.AddForce(new Vector2(-Mathf.Sign(transform.localScale.x) * wallJumpX, wallJumpY));
+        wallJumpCooldown = 0;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "Win")
+        {
+            LevelComplited.gameObject.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 
     private bool isGrounded()
